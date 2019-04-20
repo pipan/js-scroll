@@ -1,0 +1,35 @@
+{
+  "name": "@wildebeest/scroll",
+  "version": "0.1.0",
+  "description": "Scroll element with custom scroll bar",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --declaration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipan/js-scroll.git"
+  },
+  "dependencies": {
+    "@wildebeest/common": "^0.1.0",
+    "@wildebeest/touch": "^0.1.0",
+    "@wildebeest/drag": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.3"
+  },
+  "keywords": [
+    "js",
+    "module",
+    "scroll",
+    "custom",
+    "absolute"
+  ],
+  "author": "Peter Gasparik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pipan/js-scroll/issues"
+  },
+  "homepage": "https://github.com/pipan/js-scroll#readme"
+}
