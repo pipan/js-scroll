@@ -16,7 +16,7 @@ export class ScrollModule implements Module
         container.bind<Builder>('Builder').to(ScrollMarkBuilder).inSingletonScope().whenTargetNamed('scroll-mark');
         container.bind<ScrollBox>(ScrollBox).toSelf();
 
-        container.bind<interfaces.Factory<Builder>>('Factory<Builer>').toFactory<Builder>((context: interfaces.Context) => {
+        container.bind<interfaces.Factory<Builder>>('Factory<Builder>').toFactory<Builder>((context: interfaces.Context) => {
             return (name: string) => {
                 return context.container.getNamed('Builder', name);
             };

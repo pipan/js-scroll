@@ -22,7 +22,7 @@ export class ScrollBar
             }
             let percentage: number = (event.y - this.element.getBoundingClientRect().top - this.mark.getElement().offsetHeight / 2) / this.element.offsetHeight * 100;
             this.scrollTo(percentage);
-        })
+        });
     }
 
     public getElement(): any
@@ -48,6 +48,10 @@ export class ScrollBar
     public scrollBy(value: number): void
     {
         let height: number = this.element.offsetHeight;
+        if (height == 0) {
+            this.mark.setTop(0);
+            return;
+        }
         let position: number = this.mark.getTop();
         this.mark.setTop(position + value / height * 100);
     }

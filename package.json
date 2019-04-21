@@ -5,18 +5,23 @@
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc --declaration"
+    "build": "tsc --declaration",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pipan/js-scroll.git"
   },
   "dependencies": {
-    "@wildebeest/common": "^0.1.0",
-    "@wildebeest/touch": "^0.1.0",
-    "@wildebeest/drag": "^0.1.0"
+    "@wildebeest/common": "^0.2.0",
+    "@wildebeest/drag": "^0.1.1",
+    "@wildebeest/js-modules": "^0.1.0",
+    "@wildebeest/touch": "^0.2.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.4.3"
   },
   "keywords": [

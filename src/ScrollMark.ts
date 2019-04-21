@@ -13,7 +13,7 @@ export class ScrollMark
         this.element = element;
         this.emitter = emitterService.createEmitter();
 
-        let dragable: DragableElement = new DragableElement(this.element, emitterService.createEmitter());
+        let dragable: DragableElement = new DragableElement(this.element, this.emitter);
         dragable.getEmitter().on('drag', (event: any) => {
             this.emitter.emit('drag', event);
         });
