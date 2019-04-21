@@ -16,6 +16,7 @@ export class ScrollBox
     protected element: HTMLElement;
     protected pane: HTMLElement;
     protected config: any;
+    protected scrollClassTimeout: any = null;
 
     constructor(@inject(DomService) domService: DomService, @inject('Builder') @named('scroll-bar') scrollBarBuilder: ScrollBarBuilder, @inject(EmitterService) emitterService: EmitterService) 
     {
@@ -59,6 +60,15 @@ export class ScrollBox
 
     protected scrollTo(interpolatePercentage: number): void
     {
+        if (this.config.onScroll.class) {
+            if (this.scrollClassTimeout) {
+                clearTimeout(this.scrollClassTimeout);
+            }
+            this.scrollClassTimeout = setTimeout(() => {
+                this.element.classList.remove(this.config.onScroll.class);
+            }, this.config.onScroll.delay);
+            this.element.classList.add(this.config.onScroll.class);
+        }
         this.pane.style.top = (this.pane.offsetHeight - this.element.offsetHeight) * -1 * interpolatePercentage + "px";
     }
 
