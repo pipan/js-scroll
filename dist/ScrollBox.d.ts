@@ -12,6 +12,7 @@ export declare class ScrollBox {
     protected element: HTMLElement;
     protected pane: HTMLElement;
     protected config: any;
+    protected scrollClassTimeout: any;
     constructor(domService: DomService, scrollBarBuilder: ScrollBarBuilder, emitterService: EmitterService);
     initialize(element: HTMLElement, config?: any): void;
     protected scrollTo(interpolatePercentage: number): void;

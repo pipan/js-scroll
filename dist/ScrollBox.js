@@ -18,6 +18,7 @@ var ScrollBarBuilder_1 = require("./ScrollBarBuilder");
 var inversify_1 = require("inversify");
 var ScrollBox = (function () {
     function ScrollBox(domService, scrollBarBuilder, emitterService) {
+        this.scrollClassTimeout = null;
         this.domService = domService;
         this.scrollBarBuilder = scrollBarBuilder;
         this.emitterService = emitterService;
@@ -51,6 +52,16 @@ var ScrollBox = (function () {
         this.recalc();
     };
     ScrollBox.prototype.scrollTo = function (interpolatePercentage) {
+        var _this = this;
+        if (this.config.onScroll.class) {
+            if (this.scrollClassTimeout) {
+                clearTimeout(this.scrollClassTimeout);
+            }
+            this.scrollClassTimeout = setTimeout(function () {
+                _this.element.classList.remove(_this.config.onScroll.class);
+            }, this.config.onScroll.delay);
+            this.element.classList.add(this.config.onScroll.class);
+        }
         this.pane.style.top = (this.pane.offsetHeight - this.element.offsetHeight) * -1 * interpolatePercentage + "px";
     };
     ScrollBox.prototype.recalc = function () {
