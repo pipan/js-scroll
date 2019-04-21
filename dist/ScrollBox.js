@@ -21,17 +21,21 @@ var ScrollBox = (function () {
         this.domService = domService;
         this.scrollBarBuilder = scrollBarBuilder;
         this.emitterService = emitterService;
+        this.emitter = this.emitterService.createEmitter();
     }
-    ScrollBox.prototype.initialize = function (element) {
+    ScrollBox.prototype.initialize = function (element, config) {
         var _this = this;
+        if (config === void 0) { config = {}; }
         this.element = element;
-        this.touchElement = new touch_1.TouchElement(this.element, this.emitterService.createEmitter());
+        this.config = config;
+        this.touchElement = new touch_1.TouchElement(this.element, this.emitter);
         this.pane = this.element.firstElementChild;
         if (this.element.children.length > 1) {
-            console.log(this.element.childNodes);
             throw "Scroll Box cannot have more then 1 child element";
         }
-        this.scrollBar = this.scrollBarBuilder.build();
+        this.scrollBar = this.scrollBarBuilder.build({
+            emitter: this.emitter
+        });
         this.domService.insert(this.scrollBar.getElement(), this.element);
         this.element.addEventListener('mousewheel', function (event) {
             event.preventDefault();
@@ -55,6 +59,12 @@ var ScrollBox = (function () {
         }
         var heightPercentage = this.element.offsetHeight / this.pane.offsetHeight * 100;
         this.scrollBar.setProportion(heightPercentage);
+    };
+    ScrollBox.prototype.getBar = function () {
+        return this.scrollBar;
+    };
+    ScrollBox.prototype.getPane = function () {
+        return this.pane;
     };
     ScrollBox = __decorate([
         inversify_1.injectable(),

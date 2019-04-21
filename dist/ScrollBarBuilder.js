@@ -28,7 +28,10 @@ var ScrollBarBuilder = (function () {
         var scrollMark = this.scrollMarkBuilder.build();
         var scrollBarElement = this.domService.create(this.template);
         this.domService.insert(scrollMark.getElement(), scrollBarElement);
-        return new ScrollBar_1.ScrollBar(scrollBarElement, scrollMark, this.emitterService.createEmitter());
+        if (!data.emitter) {
+            data.emitter = this.emitterService.createEmitter();
+        }
+        return new ScrollBar_1.ScrollBar(scrollBarElement, scrollMark, data.emitter);
     };
     ScrollBarBuilder.prototype.setTemplate = function (template) {
         this.template = template;

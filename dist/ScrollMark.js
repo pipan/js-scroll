@@ -8,7 +8,7 @@ var ScrollMark = (function () {
         this.height = 0;
         this.element = element;
         this.emitter = emitterService.createEmitter();
-        var dragable = new drag_1.DragableElement(this.element, emitterService.createEmitter());
+        var dragable = new drag_1.DragableElement(this.element, this.emitter);
         dragable.getEmitter().on('drag', function (event) {
             _this.emitter.emit('drag', event);
         });

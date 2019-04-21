@@ -1,4 +1,4 @@
-import { DomService, EmitterService } from "@wildebeest/common";
+import { DomService, EmitterService, Emitter } from "@wildebeest/common";
 import { TouchElement } from "@wildebeest/touch";
 import { ScrollBar } from "./ScrollBar";
 import { ScrollBarBuilder } from "./ScrollBarBuilder";
@@ -6,12 +6,16 @@ export declare class ScrollBox {
     protected domService: DomService;
     protected scrollBarBuilder: ScrollBarBuilder;
     protected emitterService: EmitterService;
+    protected emitter: Emitter;
     protected scrollBar: ScrollBar;
     protected touchElement: TouchElement;
-    protected element: any;
-    protected pane: any;
+    protected element: HTMLElement;
+    protected pane: HTMLElement;
+    protected config: any;
     constructor(domService: DomService, scrollBarBuilder: ScrollBarBuilder, emitterService: EmitterService);
-    initialize(element: any): void;
-    scrollTo(interpolatePercentage: number): void;
+    initialize(element: HTMLElement, config?: any): void;
+    protected scrollTo(interpolatePercentage: number): void;
     recalc(): void;
+    getBar(): ScrollBar;
+    getPane(): HTMLElement;
 }

@@ -31,6 +31,10 @@ var ScrollBar = (function () {
     };
     ScrollBar.prototype.scrollBy = function (value) {
         var height = this.element.offsetHeight;
+        if (height == 0) {
+            this.mark.setTop(0);
+            return;
+        }
         var position = this.mark.getTop();
         this.mark.setTop(position + value / height * 100);
     };

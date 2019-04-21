@@ -13,7 +13,7 @@ var ScrollModule = (function () {
         container.bind('Builder').to(ScrollBarBuilder_1.ScrollBarBuilder).inSingletonScope().whenTargetNamed('scroll-bar');
         container.bind('Builder').to(ScrollMarkBuilder_1.ScrollMarkBuilder).inSingletonScope().whenTargetNamed('scroll-mark');
         container.bind(ScrollBox_1.ScrollBox).toSelf();
-        container.bind('Factory<Builer>').toFactory(function (context) {
+        container.bind('Factory<Builder>').toFactory(function (context) {
             return function (name) {
                 return context.container.getNamed('Builder', name);
             };
