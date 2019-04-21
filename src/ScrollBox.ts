@@ -45,7 +45,7 @@ export class ScrollBox
             this.scrollBar.scrollBy(event.deltaY);
         });
 
-        this.touchElement.getEmitter().on('touchScroll', (event: any) => {
+        this.touchElement.getEmitter().on('wbTouchscroll', (event: any) => {
             this.scrollBar.scrollBy(event.vertical);
         })
 

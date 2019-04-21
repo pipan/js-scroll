@@ -41,7 +41,7 @@ var ScrollBox = (function () {
             event.preventDefault();
             _this.scrollBar.scrollBy(event.deltaY);
         });
-        this.touchElement.getEmitter().on('touchScroll', function (event) {
+        this.touchElement.getEmitter().on('wbTouchscroll', function (event) {
             _this.scrollBar.scrollBy(event.vertical);
         });
         this.scrollBar.getEmitter().on('scroll', this.scrollTo.bind(this));
