@@ -3,15 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var drag_1 = require("@wildebeest/drag");
 var ScrollMark = (function () {
     function ScrollMark(element, emitterService) {
-        var _this = this;
         this.position = 0;
         this.height = 0;
         this.element = element;
         this.emitter = emitterService.createEmitter();
         var dragable = new drag_1.DragableElement(this.element, this.emitter);
-        dragable.getEmitter().on('drag', function (event) {
-            _this.emitter.emit('drag', event);
-        });
     }
     ScrollMark.prototype.getElement = function () {
         return this.element;
