@@ -1,19 +1,17 @@
-import { Emitter, EmitterService } from "@wildebeest/common";
-import { DragableElement } from "@wildebeest/drag";
+import { Emitter } from "@wildebeest/common";
+import { Component } from "@wildebeest/component";
 
-export class ScrollMark
+export class ScrollMark implements Component
 {
     protected element: any;
     protected emitter: Emitter;
     protected position: number = 0;
     protected height: number = 0;
 
-    constructor(element: any, emitterService: EmitterService)
+    constructor(element: any, emitter: Emitter)
     {
         this.element = element;
-        this.emitter = emitterService.createEmitter();
-
-        let dragable: DragableElement = new DragableElement(this.element, this.emitter);
+        this.emitter = emitter;
     }
 
     public getElement(): any
@@ -38,7 +36,7 @@ export class ScrollMark
         this.position = value;
         this.element.style.top = value + "%";
         if (changed) {
-            this.emitter.emit('move', this.getInterpolatedPosition());
+            this.emitter.emit('wbMove', this.getInterpolatedPosition());
         }
     }
 

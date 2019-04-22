@@ -5,22 +5,16 @@ import { TouchModule } from "@wildebeest/touch";
 import { DragModule } from "@wildebeest/drag";
 import { ScrollBarBuilder } from "./ScrollBarBuilder";
 import { ScrollMarkBuilder } from "./ScrollMarkBuilder";
-import { Builder } from "./Builder";
 import { ScrollBox } from "./ScrollBox";
+import { ComponentBuilder } from "@wildebeest/component";
 
 export class ScrollModule implements Module
 {
     register(container: Container): void
     {
-        container.bind<Builder>('Builder').to(ScrollBarBuilder).inSingletonScope().whenTargetNamed('scroll-bar');
-        container.bind<Builder>('Builder').to(ScrollMarkBuilder).inSingletonScope().whenTargetNamed('scroll-mark');
+        container.bind<ComponentBuilder>('ComponentBuilder').to(ScrollBarBuilder).inSingletonScope().whenTargetNamed('scroll-bar');
+        container.bind<ComponentBuilder>('ComponentBuilder').to(ScrollMarkBuilder).inSingletonScope().whenTargetNamed('scroll-mark');
         container.bind<ScrollBox>(ScrollBox).toSelf();
-
-        container.bind<interfaces.Factory<Builder>>('Factory<Builder>').toFactory<Builder>((context: interfaces.Context) => {
-            return (name: string) => {
-                return context.container.getNamed('Builder', name);
-            };
-        });
     }
 
     boot(container: Container): void { }

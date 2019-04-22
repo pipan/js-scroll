@@ -1,10 +1,11 @@
 import { DomService, EmitterService } from "@wildebeest/common";
-import { Builder } from "./Builder";
 import { ScrollMark } from "./ScrollMark";
 import { injectable, inject } from "inversify";
+import { DragableComponent } from "@wildebeest/drag";
+import { Component, ComponentBuilder } from "@wildebeest/component";
 
 @injectable()
-export class ScrollMarkBuilder implements Builder
+export class ScrollMarkBuilder implements ComponentBuilder
 {
     protected domService: DomService;
     protected emitterService: EmitterService;
@@ -17,10 +18,10 @@ export class ScrollMarkBuilder implements Builder
         this.template = '<div class="scroll-bar__mark"></div>';
     }
 
-    build(data: any = {}): any
+    build(data: any = {}): Component
     {
         let scrollMarkElement = this.domService.create(this.template);
-        return new ScrollMark(scrollMarkElement, this.emitterService);
+        return new ScrollMark(scrollMarkElement, this.emitterService.createEmitter());
     }
 
     setTemplate(template: string): void

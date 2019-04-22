@@ -1,8 +1,10 @@
 import { DomService, EmitterService, Emitter } from "@wildebeest/common";
-import { TouchElement } from "@wildebeest/touch";
+import { TouchComponent } from "@wildebeest/touch";
 import { ScrollBar } from "./ScrollBar";
 import { ScrollBarBuilder } from "./ScrollBarBuilder";
 import { injectable, inject, named } from "inversify";
+import { ScrollMark } from "./ScrollMark";
+import { DragableComponent } from "@wildebeest/drag";
 
 @injectable()
 export class ScrollBox 
@@ -12,7 +14,7 @@ export class ScrollBox
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected scrollBar: ScrollBar;
-    protected touchElement: TouchElement;
+    protected touchComponent: TouchComponent;
     protected element: HTMLElement;
     protected pane: HTMLElement;
     protected config: any;
@@ -30,7 +32,7 @@ export class ScrollBox
     {
         this.element = element;
         this.config = config;
-        this.touchElement = new TouchElement(this.element, this.emitter);
+        this.touchComponent = new TouchComponent(this.element, this.emitter);
         this.pane = this.element.firstElementChild as HTMLElement;
         if (this.element.children.length > 1) {
             throw "Scroll Box cannot have more then 1 child element";
@@ -41,19 +43,22 @@ export class ScrollBox
         });
         this.domService.insert(this.scrollBar.getElement(), this.element);
 
+        let mark: ScrollMark = this.getBar().getMark();
+        new DragableComponent(mark.getElement(), mark.getEmitter());
+        mark.getEmitter().on('wbDrag', (event: any) => {
+            this.scrollBar.scrollBy(event.vertical);
+        });
+
         this.element.addEventListener('mousewheel', (event: WheelEvent) => {
             event.preventDefault();
             this.scrollBar.scrollBy(event.deltaY);
         });
 
-        this.touchElement.getEmitter().on('wbTouchscroll', (event: any) => {
+        this.touchComponent.getEmitter().on('wbTouchscroll', (event: any) => {
             this.scrollBar.scrollBy(event.vertical);
         })
 
-        this.scrollBar.getEmitter().on('scroll', this.scrollTo.bind(this));
-        this.scrollBar.getMark().getEmitter().on('drag', (event: any) => {
-            this.scrollBar.scrollBy(event.vertical);
-        });
+        this.scrollBar.getEmitter().on('wbScroll', this.scrollTo.bind(this));        
 
         this.recalc();
     }

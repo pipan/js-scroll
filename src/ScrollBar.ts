@@ -1,19 +1,20 @@
 import { ScrollMark } from "./ScrollMark";
 import { Emitter } from "@wildebeest/common";
+import { Component } from "@wildebeest/component";
 
-export class ScrollBar
+export class ScrollBar implements Component
 {
-    protected element: any;
+    protected element: HTMLElement;
     protected mark: ScrollMark;
     protected emitter: Emitter;
 
-    constructor(element: any, mark: ScrollMark, emitter: Emitter)
+    constructor(element: HTMLElement, mark: ScrollMark, emitter: Emitter)
     {
         this.element = element;
         this.mark = mark;
         this.emitter = emitter;
-        mark.getEmitter().on('move', (position: number) => {
-            this.emitter.emit('scroll', position);
+        mark.getEmitter().on('wbMove', (position: number) => {
+            this.emitter.emit('wbScroll', position);
         });
 
         this.element.addEventListener('mousedown', (event: any) => {
@@ -25,7 +26,7 @@ export class ScrollBar
         });
     }
 
-    public getElement(): any
+    public getElement(): HTMLElement
     {
         return this.element;
     }
