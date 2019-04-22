@@ -6,6 +6,7 @@ var drag_1 = require("@wildebeest/drag");
 var ScrollBarBuilder_1 = require("./ScrollBarBuilder");
 var ScrollMarkBuilder_1 = require("./ScrollMarkBuilder");
 var ScrollBox_1 = require("./ScrollBox");
+var component_1 = require("@wildebeest/component");
 var ScrollModule = (function () {
     function ScrollModule() {
     }
@@ -16,7 +17,7 @@ var ScrollModule = (function () {
     };
     ScrollModule.prototype.boot = function (container) { };
     ScrollModule.prototype.getDependencies = function () {
-        return [common_1.CommonModule, touch_1.TouchModule, drag_1.DragModule];
+        return [common_1.CommonModule, component_1.ComponentModule, touch_1.TouchModule, drag_1.DragModule];
     };
     return ScrollModule;
 }());

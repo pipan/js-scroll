@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = require("@wildebeest/common");
 var touch_1 = require("@wildebeest/touch");
-var ScrollBarBuilder_1 = require("./ScrollBarBuilder");
 var inversify_1 = require("inversify");
 var drag_1 = require("@wildebeest/drag");
 var ScrollBox = (function () {
@@ -82,8 +81,8 @@ var ScrollBox = (function () {
     };
     ScrollBox = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject(common_1.DomService)), __param(1, inversify_1.inject('Builder')), __param(1, inversify_1.named('scroll-bar')), __param(2, inversify_1.inject(common_1.EmitterService)),
-        __metadata("design:paramtypes", [common_1.DomService, ScrollBarBuilder_1.ScrollBarBuilder, common_1.EmitterService])
+        __param(0, inversify_1.inject(common_1.DomService)), __param(1, inversify_1.inject('ComponentBuilder')), __param(1, inversify_1.named('scroll-bar')), __param(2, inversify_1.inject(common_1.EmitterService)),
+        __metadata("design:paramtypes", [common_1.DomService, Object, common_1.EmitterService])
     ], ScrollBox);
     return ScrollBox;
 }());
