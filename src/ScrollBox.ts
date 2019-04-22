@@ -5,12 +5,13 @@ import { ScrollBarBuilder } from "./ScrollBarBuilder";
 import { injectable, inject, named } from "inversify";
 import { ScrollMark } from "./ScrollMark";
 import { DragableComponent } from "@wildebeest/drag";
+import { ComponentBuilder } from "@wildebeest/component";
 
 @injectable()
 export class ScrollBox 
 {
     protected domService: DomService;
-    protected scrollBarBuilder: ScrollBarBuilder;
+    protected scrollBarBuilder: ComponentBuilder;
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected scrollBar: ScrollBar;
@@ -20,7 +21,7 @@ export class ScrollBox
     protected config: any;
     protected scrollClassTimeout: any = null;
 
-    constructor(@inject(DomService) domService: DomService, @inject('Builder') @named('scroll-bar') scrollBarBuilder: ScrollBarBuilder, @inject(EmitterService) emitterService: EmitterService) 
+    constructor(@inject(DomService) domService: DomService, @inject('ComponentBuilder') @named('scroll-bar') scrollBarBuilder: ComponentBuilder, @inject(EmitterService) emitterService: EmitterService) 
     {
         this.domService = domService;
         this.scrollBarBuilder = scrollBarBuilder;
@@ -40,7 +41,7 @@ export class ScrollBox
         
         this.scrollBar = this.scrollBarBuilder.build({
             emitter: this.emitter
-        });
+        }) as ScrollBar;
         this.domService.insert(this.scrollBar.getElement(), this.element);
 
         let mark: ScrollMark = this.getBar().getMark();

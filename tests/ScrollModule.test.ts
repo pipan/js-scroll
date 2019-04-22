@@ -10,9 +10,9 @@ app.run([ScrollModule]);
 
 test("register services", () => {
     expect(app.getContainer().get(ScrollBox)).toBeInstanceOf(ScrollBox);
-    expect(app.getContainer().getNamed('Builder', 'scroll-bar')).toBeInstanceOf(ScrollBarBuilder);
-    expect(app.getContainer().getNamed('Builder', 'scroll-mark')).toBeInstanceOf(ScrollMarkBuilder);
-    let factory: any = app.getContainer().get('Factory<Builder>');
+    expect(app.getContainer().getNamed('ComponentBuilder', 'scroll-bar')).toBeInstanceOf(ScrollBarBuilder);
+    expect(app.getContainer().getNamed('ComponentBuilder', 'scroll-mark')).toBeInstanceOf(ScrollMarkBuilder);
+    let factory: any = app.getContainer().get('Factory<ComponentBuilder>');
     expect(factory('scroll-bar')).toBeInstanceOf(ScrollBarBuilder);
     expect(factory('scroll-mark')).toBeInstanceOf(ScrollMarkBuilder);
 });

@@ -1,5 +1,5 @@
 import { DomService, EmitterService, Emitter } from "@wildebeest/common";
-import { TouchElement } from "@wildebeest/touch";
+import { TouchComponent } from "@wildebeest/touch";
 import { ScrollBar } from "./ScrollBar";
 import { ScrollBarBuilder } from "./ScrollBarBuilder";
 export declare class ScrollBox {
@@ -8,7 +8,7 @@ export declare class ScrollBox {
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected scrollBar: ScrollBar;
-    protected touchElement: TouchElement;
+    protected touchComponent: TouchComponent;
     protected element: HTMLElement;
     protected pane: HTMLElement;
     protected config: any;

@@ -1,7 +1,7 @@
 import { EmitterService, DomService } from "@wildebeest/common";
-import { Builder } from "./Builder";
 import { ScrollMarkBuilder } from "./ScrollMarkBuilder";
-export declare class ScrollBarBuilder implements Builder {
+import { ComponentBuilder } from "@wildebeest/component";
+export declare class ScrollBarBuilder implements ComponentBuilder {
     protected domService: DomService;
     protected scrollMarkBuilder: ScrollMarkBuilder;
     protected emitterService: EmitterService;

@@ -16,6 +16,7 @@ var common_1 = require("@wildebeest/common");
 var touch_1 = require("@wildebeest/touch");
 var ScrollBarBuilder_1 = require("./ScrollBarBuilder");
 var inversify_1 = require("inversify");
+var drag_1 = require("@wildebeest/drag");
 var ScrollBox = (function () {
     function ScrollBox(domService, scrollBarBuilder, emitterService) {
         this.scrollClassTimeout = null;
@@ -29,7 +30,7 @@ var ScrollBox = (function () {
         if (config === void 0) { config = {}; }
         this.element = element;
         this.config = config;
-        this.touchElement = new touch_1.TouchElement(this.element, this.emitter);
+        this.touchComponent = new touch_1.TouchComponent(this.element, this.emitter);
         this.pane = this.element.firstElementChild;
         if (this.element.children.length > 1) {
             throw "Scroll Box cannot have more then 1 child element";
@@ -38,17 +39,19 @@ var ScrollBox = (function () {
             emitter: this.emitter
         });
         this.domService.insert(this.scrollBar.getElement(), this.element);
+        var mark = this.getBar().getMark();
+        new drag_1.DragableComponent(mark.getElement(), mark.getEmitter());
+        mark.getEmitter().on('wbDrag', function (event) {
+            _this.scrollBar.scrollBy(event.vertical);
+        });
         this.element.addEventListener('mousewheel', function (event) {
             event.preventDefault();
             _this.scrollBar.scrollBy(event.deltaY);
         });
-        this.touchElement.getEmitter().on('wbTouchscroll', function (event) {
+        this.touchComponent.getEmitter().on('wbTouchscroll', function (event) {
             _this.scrollBar.scrollBy(event.vertical);
         });
-        this.scrollBar.getEmitter().on('scroll', this.scrollTo.bind(this));
-        this.scrollBar.getMark().getEmitter().on('drag', function (event) {
-            _this.scrollBar.scrollBy(event.vertical);
-        });
+        this.scrollBar.getEmitter().on('wbScroll', this.scrollTo.bind(this));
         this.recalc();
     };
     ScrollBox.prototype.scrollTo = function (interpolatePercentage) {

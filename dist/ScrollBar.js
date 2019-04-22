@@ -6,8 +6,8 @@ var ScrollBar = (function () {
         this.element = element;
         this.mark = mark;
         this.emitter = emitter;
-        mark.getEmitter().on('move', function (position) {
-            _this.emitter.emit('scroll', position);
+        mark.getEmitter().on('wbMove', function (position) {
+            _this.emitter.emit('wbScroll', position);
         });
         this.element.addEventListener('mousedown', function (event) {
             if (event.button != 0) {

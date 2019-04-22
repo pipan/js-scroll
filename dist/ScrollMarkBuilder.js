@@ -24,7 +24,7 @@ var ScrollMarkBuilder = (function () {
     ScrollMarkBuilder.prototype.build = function (data) {
         if (data === void 0) { data = {}; }
         var scrollMarkElement = this.domService.create(this.template);
-        return new ScrollMark_1.ScrollMark(scrollMarkElement, this.emitterService);
+        return new ScrollMark_1.ScrollMark(scrollMarkElement, this.emitterService.createEmitter());
     };
     ScrollMarkBuilder.prototype.setTemplate = function (template) {
         this.template = template;

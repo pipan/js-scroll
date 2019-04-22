@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var drag_1 = require("@wildebeest/drag");
 var ScrollMark = (function () {
-    function ScrollMark(element, emitterService) {
+    function ScrollMark(element, emitter) {
         this.position = 0;
         this.height = 0;
         this.element = element;
-        this.emitter = emitterService.createEmitter();
-        var dragable = new drag_1.DragableElement(this.element, this.emitter);
+        this.emitter = emitter;
     }
     ScrollMark.prototype.getElement = function () {
         return this.element;
@@ -26,7 +24,7 @@ var ScrollMark = (function () {
         this.position = value;
         this.element.style.top = value + "%";
         if (changed) {
-            this.emitter.emit('move', this.getInterpolatedPosition());
+            this.emitter.emit('wbMove', this.getInterpolatedPosition());
         }
     };
     ScrollMark.prototype.getInterpolatedPosition = function () {

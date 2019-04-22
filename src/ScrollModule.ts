@@ -6,7 +6,7 @@ import { DragModule } from "@wildebeest/drag";
 import { ScrollBarBuilder } from "./ScrollBarBuilder";
 import { ScrollMarkBuilder } from "./ScrollMarkBuilder";
 import { ScrollBox } from "./ScrollBox";
-import { ComponentBuilder } from "@wildebeest/component";
+import { ComponentBuilder, ComponentModule } from "@wildebeest/component";
 
 export class ScrollModule implements Module
 {
@@ -21,6 +21,6 @@ export class ScrollModule implements Module
 
     getDependencies(): Array<any>
     {
-        return [CommonModule, TouchModule, DragModule];
+        return [CommonModule, ComponentModule, TouchModule, DragModule];
     }
 }

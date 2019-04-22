@@ -1,10 +1,10 @@
 import { DomService, EmitterService } from "@wildebeest/common";
-import { Builder } from "./Builder";
-export declare class ScrollMarkBuilder implements Builder {
+import { Component, ComponentBuilder } from "@wildebeest/component";
+export declare class ScrollMarkBuilder implements ComponentBuilder {
     protected domService: DomService;
     protected emitterService: EmitterService;
     protected template: string;
     constructor(domService: DomService, emitterService: EmitterService);
-    build(data?: any): any;
+    build(data?: any): Component;
     setTemplate(template: string): void;
 }

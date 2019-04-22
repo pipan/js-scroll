@@ -9,11 +9,11 @@ import { ComponentBuilder } from "@wildebeest/component";
 export class ScrollBarBuilder implements ComponentBuilder
 {
     protected domService: DomService;
-    protected scrollMarkBuilder: ScrollMarkBuilder;
+    protected scrollMarkBuilder: ComponentBuilder;
     protected emitterService: EmitterService;
     protected template: string;
 
-    constructor(@inject(DomService) domService: DomService, @inject('Builder') @named('scroll-mark') scrollMarkBuilder: ScrollMarkBuilder, @inject(EmitterService) emitterService: EmitterService)
+    constructor(@inject(DomService) domService: DomService, @inject('ComponentBuilder') @named('scroll-mark') scrollMarkBuilder: ComponentBuilder, @inject(EmitterService) emitterService: EmitterService)
     {
         this.domService = domService;
         this.scrollMarkBuilder = scrollMarkBuilder;
@@ -23,7 +23,7 @@ export class ScrollBarBuilder implements ComponentBuilder
 
     public build(data: any = {}): any
     {
-        let scrollMark: ScrollMark = this.scrollMarkBuilder.build() as ScrollMark;
+        let scrollMark: ScrollMark = this.scrollMarkBuilder.build({}) as ScrollMark;
         let scrollBarElement = this.domService.create(this.template);
         this.domService.insert(scrollMark.getElement(), scrollBarElement);
         if (!data.emitter) {
