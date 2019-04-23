@@ -9,7 +9,6 @@ export declare class ScrollBar implements Component {
     getElement(): HTMLElement;
     getMark(): ScrollMark;
     getEmitter(): Emitter;
-    scrollTo(percentage: number): void;
-    scrollBy(value: number): void;
-    setProportion(heightProportion: number): void;
+    scrollTo(normalizetPercentagePosition: number): void;
+    scrollBy(normalizetPercentageMovement: number): void;
 }

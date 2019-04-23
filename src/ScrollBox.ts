@@ -1,14 +1,12 @@
 import { DomService, EmitterService, Emitter } from "@wildebeest/common";
 import { TouchComponent } from "@wildebeest/touch";
 import { ScrollBar } from "./ScrollBar";
-import { ScrollBarBuilder } from "./ScrollBarBuilder";
 import { injectable, inject, named } from "inversify";
 import { ScrollMark } from "./ScrollMark";
-import { DragableComponent } from "@wildebeest/drag";
-import { ComponentBuilder } from "@wildebeest/component";
+import { ComponentBuilder, Component } from "@wildebeest/component";
 
 @injectable()
-export class ScrollBox 
+export class ScrollBox  implements Component
 {
     protected domService: DomService;
     protected scrollBarBuilder: ComponentBuilder;
@@ -35,6 +33,9 @@ export class ScrollBox
         this.config = config;
         this.touchComponent = new TouchComponent(this.element, this.emitter);
         this.pane = this.element.firstElementChild as HTMLElement;
+        if (this.element.children.length == 0) {
+            throw "Scroll Box has to have 1 child element";
+        }
         if (this.element.children.length > 1) {
             throw "Scroll Box cannot have more then 1 child element";
         }
@@ -44,27 +45,26 @@ export class ScrollBox
         }) as ScrollBar;
         this.domService.insert(this.scrollBar.getElement(), this.element);
 
-        let mark: ScrollMark = this.getBar().getMark();
-        new DragableComponent(mark.getElement(), mark.getEmitter());
-        mark.getEmitter().on('wbDrag', (event: any) => {
-            this.scrollBar.scrollBy(event.vertical);
+        let scrollMark: ScrollMark = this.getBar().getMark();
+        scrollMark.getEmitter().on('wbDrag', (event: any) => {
+            this.scrollBar.scrollBy(this.normalize(event.vertical));
         });
 
         this.element.addEventListener('mousewheel', (event: WheelEvent) => {
             event.preventDefault();
-            this.scrollBar.scrollBy(event.deltaY);
+            this.scrollBar.scrollBy(this.normalize(event.deltaY));
         });
 
         this.touchComponent.getEmitter().on('wbTouchscroll', (event: any) => {
-            this.scrollBar.scrollBy(event.vertical);
+            this.scrollBar.scrollBy(this.normalize(event.vertical));
         })
 
-        this.scrollBar.getEmitter().on('wbScroll', this.scrollTo.bind(this));        
+        this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));        
 
         this.recalc();
     }
 
-    protected scrollTo(interpolatePercentage: number): void
+    protected updateView(interpolatePercentage: number): void
     {
         if (this.config.onScroll.class) {
             if (this.scrollClassTimeout) {
@@ -82,9 +82,12 @@ export class ScrollBox
     {
         if (!this.pane) {
             return;
-        }    
-        let heightPercentage: number = this.element.offsetHeight / this.pane.offsetHeight *100;
-        this.scrollBar.setProportion(heightPercentage);
+        }
+        if (this.pane.offsetHeight == 0) {
+            this.scrollBar.getMark().setHeight(0);
+        } else {
+            this.scrollBar.getMark().setHeight(Math.min(this.element.offsetHeight / this.pane.offsetHeight, 1));
+        }
     }
 
     public getBar(): ScrollBar
@@ -95,5 +98,23 @@ export class ScrollBox
     public getPane(): HTMLElement
     {
         return this.pane;
+    }
+
+    public getElement(): HTMLElement
+    {
+        return this.element;
+    }
+
+    public getEmitter(): Emitter
+    {
+        return this.emitter;
+    }
+
+    protected normalize(pixelValue: number): number
+    {
+        if (!this.pane.offsetHeight) {
+            return 0;
+        }
+        return pixelValue / this.pane.offsetHeight;
     }
 }

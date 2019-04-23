@@ -8,8 +8,11 @@ export declare class ScrollMark implements Component {
     constructor(element: any, emitter: Emitter);
     getElement(): any;
     getEmitter(): Emitter;
-    setTop(value: number): void;
-    protected getInterpolatedPosition(): number;
+    setPosition(normalizedPosition: number): void;
+    addToPosition(normalizedPosition: number): void;
     setHeight(value: number): void;
-    getTop(): number;
+    getPosition(): number;
+    protected getTopPercentage(): number;
+    protected getHeightPercentage(): number;
+    protected updateElement(): void;
 }

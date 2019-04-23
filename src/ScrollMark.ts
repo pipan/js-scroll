@@ -1,5 +1,6 @@
 import { Emitter } from "@wildebeest/common";
 import { Component } from "@wildebeest/component";
+import { DragableComponent } from "@wildebeest/drag";
 
 export class ScrollMark implements Component
 {
@@ -12,6 +13,8 @@ export class ScrollMark implements Component
     {
         this.element = element;
         this.emitter = emitter;
+
+        new DragableComponent(this.getElement(), this.getEmitter());
     }
 
     public getElement(): any
@@ -24,35 +27,45 @@ export class ScrollMark implements Component
         return this.emitter;
     }
 
-    public setTop(value: number): void
+    public setPosition(normalizedPosition: number): void
     {
-        if (value < 0) {
-            value = 0;
-        }
-        if (value > 100 - this.height) {
-            value = 100 - this.height;
-        }
-        let changed: boolean = this.position != value;
-        this.position = value;
-        this.element.style.top = value + "%";
+        normalizedPosition = Math.min(Math.max(normalizedPosition, 0), 1);
+        let changed: boolean = this.position != normalizedPosition;
+        this.position = normalizedPosition;
         if (changed) {
-            this.emitter.emit('wbMove', this.getInterpolatedPosition());
+            this.emitter.emit('wbMove', this.position);
         }
     }
 
-    protected getInterpolatedPosition(): number
+    public addToPosition(normalizedPosition: number): void
     {
-        return this.position / (100 - this.height);
+        this.setPosition(this.position + normalizedPosition);
     }
 
     public setHeight(value: number): void {
         this.height = value;
-        this.element.style.height = this.height + "%";
-        this.setTop(this.position);
+        this.updateElement();
+        
     }
 
-    public getTop(): number
+    public getPosition(): number
     {
         return this.position;
+    }
+
+    protected getTopPercentage(): number
+    {
+        return (1 - this.height) * this.position * 100;
+    }
+
+    protected getHeightPercentage(): number
+    {
+        return this.height * 100;
+    }
+
+    protected updateElement(): void
+    {
+        this.element.style.height = this.getHeightPercentage() + "%";
+        this.element.style.top = this.getTopPercentage() + "%";
     }
 }

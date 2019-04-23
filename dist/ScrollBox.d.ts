@@ -1,8 +1,8 @@
 import { DomService, EmitterService, Emitter } from "@wildebeest/common";
 import { TouchComponent } from "@wildebeest/touch";
 import { ScrollBar } from "./ScrollBar";
-import { ComponentBuilder } from "@wildebeest/component";
-export declare class ScrollBox {
+import { ComponentBuilder, Component } from "@wildebeest/component";
+export declare class ScrollBox implements Component {
     protected domService: DomService;
     protected scrollBarBuilder: ComponentBuilder;
     protected emitterService: EmitterService;
@@ -15,8 +15,11 @@ export declare class ScrollBox {
     protected scrollClassTimeout: any;
     constructor(domService: DomService, scrollBarBuilder: ComponentBuilder, emitterService: EmitterService);
     initialize(element: HTMLElement, config?: any): void;
-    protected scrollTo(interpolatePercentage: number): void;
+    protected updateView(interpolatePercentage: number): void;
     recalc(): void;
     getBar(): ScrollBar;
     getPane(): HTMLElement;
+    getElement(): HTMLElement;
+    getEmitter(): Emitter;
+    protected normalize(pixelValue: number): number;
 }

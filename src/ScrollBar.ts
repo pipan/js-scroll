@@ -21,7 +21,7 @@ export class ScrollBar implements Component
             if (event.button != 0) {
                 return;
             }
-            let percentage: number = (event.y - this.element.getBoundingClientRect().top - this.mark.getElement().offsetHeight / 2) / this.element.offsetHeight * 100;
+            let percentage: number = (event.y - this.element.getBoundingClientRect().top) / this.element.offsetHeight;
             this.scrollTo(percentage);
         });
     }
@@ -41,24 +41,13 @@ export class ScrollBar implements Component
         return this.emitter;
     }
 
-    public scrollTo(percentage: number): void
+    public scrollTo(normalizetPercentagePosition: number): void
     {
-        this.mark.setTop(percentage);
+        this.mark.setPosition(normalizetPercentagePosition);
     }
 
-    public scrollBy(value: number): void
+    public scrollBy(normalizetPercentageMovement: number): void
     {
-        let height: number = this.element.offsetHeight;
-        if (height == 0) {
-            this.mark.setTop(0);
-            return;
-        }
-        let position: number = this.mark.getTop();
-        this.mark.setTop(position + value / height * 100);
-    }
-
-    public setProportion(heightProportion: number): void
-    {
-        this.mark.setHeight(heightProportion);
+        this.mark.addToPosition(normalizetPercentageMovement);
     }
 }
