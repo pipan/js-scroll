@@ -42,14 +42,14 @@ var ScrollBox = (function () {
         this.domService.insert([this.scrollBar.getElement()], this.element);
         var scrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', function (event) {
-            _this.scrollBar.scrollBy(_this.normalize(event.vertical));
+            _this.scrollBar.scrollBy(_this.normalizeRemaining(event.vertical));
         });
         this.element.addEventListener('mousewheel', function (event) {
             event.preventDefault();
-            _this.scrollBar.scrollBy(_this.normalize(event.deltaY));
+            _this.scrollBar.scrollBy(_this.normalizeRemaining(event.deltaY));
         });
         this.touchComponent.getEmitter().on('wbTouchscroll', function (event) {
-            _this.scrollBar.scrollBy(_this.normalize(event.vertical));
+            _this.scrollBar.scrollBy(_this.normalizeRemaining(event.vertical));
         });
         this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));
         this.recalc();
@@ -90,11 +90,12 @@ var ScrollBox = (function () {
     ScrollBox.prototype.getEmitter = function () {
         return this.emitter;
     };
-    ScrollBox.prototype.normalize = function (pixelValue) {
-        if (!this.pane.offsetHeight) {
+    ScrollBox.prototype.normalizeRemaining = function (pixelValue) {
+        var remaining = this.pane.offsetHeight - this.element.offsetHeight;
+        if (remaining <= 0) {
             return 0;
         }
-        return pixelValue / this.pane.offsetHeight;
+        return pixelValue / remaining;
     };
     ScrollBox = __decorate([
         inversify_1.injectable(),

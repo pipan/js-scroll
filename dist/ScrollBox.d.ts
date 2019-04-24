@@ -21,5 +21,5 @@ export declare class ScrollBox implements Component {
     getPane(): HTMLElement;
     getElement(): HTMLElement;
     getEmitter(): Emitter;
-    protected normalize(pixelValue: number): number;
+    protected normalizeRemaining(pixelValue: number): number;
 }

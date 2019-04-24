@@ -47,16 +47,16 @@ export class ScrollBox  implements Component
 
         let scrollMark: ScrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', (event: any) => {
-            this.scrollBar.scrollBy(this.normalize(event.vertical));
+            this.scrollBar.scrollBy(this.normalizeRemaining(event.vertical));
         });
 
         this.element.addEventListener('mousewheel', (event: WheelEvent) => {
             event.preventDefault();
-            this.scrollBar.scrollBy(this.normalize(event.deltaY));
+            this.scrollBar.scrollBy(this.normalizeRemaining(event.deltaY));
         });
 
         this.touchComponent.getEmitter().on('wbTouchscroll', (event: any) => {
-            this.scrollBar.scrollBy(this.normalize(event.vertical));
+            this.scrollBar.scrollBy(this.normalizeRemaining(event.vertical));
         })
 
         this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));        
@@ -110,11 +110,12 @@ export class ScrollBox  implements Component
         return this.emitter;
     }
 
-    protected normalize(pixelValue: number): number
+    protected normalizeRemaining(pixelValue: number): number
     {
-        if (!this.pane.offsetHeight) {
+        let remaining: number = this.pane.offsetHeight - this.element.offsetHeight;
+        if (remaining <= 0) {
             return 0;
         }
-        return pixelValue / this.pane.offsetHeight;
+        return pixelValue / remaining;
     }
 }
