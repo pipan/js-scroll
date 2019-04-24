@@ -47,7 +47,7 @@ export class ScrollBox  implements Component
 
         let scrollMark: ScrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', (event: any) => {
-            this.scrollBar.scrollTo(this.normalize(event.mouseEvent.y - this.element.getBoundingClientRect().top));
+            this.scrollBar.scrollBy(this.normalizeRemaining(event.vertical));
         });
 
         this.element.addEventListener('mousewheel', (event: WheelEvent) => {
