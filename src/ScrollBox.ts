@@ -47,7 +47,7 @@ export class ScrollBox  implements Component
 
         let scrollMark: ScrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', (event: any) => {
-            this.scrollBar.scrollBy(this.normalizeRemaining(event.vertical));
+            this.scrollBar.scrollBy(this.normalize(event.vertical));
         });
 
         this.element.addEventListener('mousewheel', (event: WheelEvent) => {
@@ -117,5 +117,13 @@ export class ScrollBox  implements Component
             return 0;
         }
         return pixelValue / remaining;
+    }
+
+    protected normalize(pixelValue: number): number
+    {
+        if (this.element.offsetHeight <= 0) {
+            return 0;
+        }
+        return pixelValue / this.element.offsetHeight;
     }
 }
