@@ -20,6 +20,7 @@ var ScrollMark = (function () {
         var changed = this.position != normalizedPosition;
         this.position = normalizedPosition;
         if (changed) {
+            this.updateElement();
             this.emitter.emit('wbMove', this.position);
         }
     };
