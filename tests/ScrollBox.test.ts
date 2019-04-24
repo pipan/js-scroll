@@ -29,6 +29,7 @@ test("correct initialization", () => {
     expect(box.getBar()).toBeInstanceOf(ScrollBar);
     expect(box.getPane()).toBeInstanceOf(HTMLElement);
     expect(box.getPane().outerHTML).toEqual('<div id="pane1"></div>');
+    expect(box.getElement().innerHTML).toEqual('<div id="pane1"></div><div class="scroll-bar"><div class="scroll-bar__mark" style="height: 0%; top: 0%;"></div></div>');
 });
 
 test("multiple elements inside scroll box", () => {

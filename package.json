@@ -9,7 +9,8 @@
     "test": "jest",
     "deploy": "npm run test && npm run build && git add -A && git commit -m 'deploy' && git push origin master",
     "patch": "npm run deploy && npm version patch && npm publish",
-    "minor": "npm run deploy && npm version major && npm publish"
+    "minor": "npm run deploy && npm version minor && npm publish",
+    "major": "npm run deploy && npm version major && npm publish"
   },
   "repository": {
     "type": "git",
