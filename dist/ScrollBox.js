@@ -42,7 +42,7 @@ var ScrollBox = (function () {
         this.domService.insert([this.scrollBar.getElement()], this.element);
         var scrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', function (event) {
-            _this.scrollBar.scrollBy(_this.normalizeRemaining(event.vertical));
+            _this.scrollBar.scrollBy(_this.normalize(event.vertical));
         });
         this.element.addEventListener('mousewheel', function (event) {
             event.preventDefault();
@@ -101,7 +101,7 @@ var ScrollBox = (function () {
         if (this.element.offsetHeight <= 0) {
             return 0;
         }
-        return pixelValue / this.element.offsetHeight;
+        return pixelValue / this.scrollBar.getElement().offsetHeight;
     };
     ScrollBox = __decorate([
         inversify_1.injectable(),
