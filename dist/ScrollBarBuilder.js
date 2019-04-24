@@ -26,7 +26,7 @@ var ScrollBarBuilder = (function () {
         if (data === void 0) { data = {}; }
         var scrollMark = this.scrollMarkBuilder.build({});
         var scrollBarElement = this.domService.create(this.template);
-        this.domService.insert(scrollMark.getElement(), scrollBarElement);
+        this.domService.insert([scrollMark.getElement()], scrollBarElement);
         if (!data.emitter) {
             data.emitter = this.emitterService.createEmitter();
         }

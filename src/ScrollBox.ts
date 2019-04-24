@@ -43,7 +43,7 @@ export class ScrollBox  implements Component
         this.scrollBar = this.scrollBarBuilder.build({
             emitter: this.emitter
         }) as ScrollBar;
-        this.domService.insert(this.scrollBar.getElement(), this.element);
+        this.domService.insert([this.scrollBar.getElement()], this.element);
 
         let scrollMark: ScrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', (event: any) => {

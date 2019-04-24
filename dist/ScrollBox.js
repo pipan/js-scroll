@@ -39,7 +39,7 @@ var ScrollBox = (function () {
         this.scrollBar = this.scrollBarBuilder.build({
             emitter: this.emitter
         });
-        this.domService.insert(this.scrollBar.getElement(), this.element);
+        this.domService.insert([this.scrollBar.getElement()], this.element);
         var scrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', function (event) {
             _this.scrollBar.scrollBy(_this.normalize(event.vertical));
