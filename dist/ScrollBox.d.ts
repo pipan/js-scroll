@@ -17,6 +17,7 @@ export declare class ScrollBox implements Component {
     initialize(element: HTMLElement, config?: any): void;
     protected updateView(interpolatePercentage: number): void;
     recalc(): void;
+    getScrollTop(): number;
     getBar(): ScrollBar;
     getPane(): HTMLElement;
     getElement(): HTMLElement;

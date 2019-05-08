@@ -24,12 +24,14 @@ var ScrollBarBuilder = (function () {
     }
     ScrollBarBuilder.prototype.build = function (data) {
         if (data === void 0) { data = {}; }
-        var scrollMark = this.scrollMarkBuilder.build({});
-        var scrollBarElement = this.domService.create(this.template);
-        this.domService.insert([scrollMark.getElement()], scrollBarElement);
         if (!data.emitter) {
             data.emitter = this.emitterService.createEmitter();
         }
+        var scrollMark = this.scrollMarkBuilder.build({
+            emitter: data.emitter
+        });
+        var scrollBarElement = this.domService.create(this.template);
+        this.domService.insert([scrollMark.getElement()], scrollBarElement);
         return new ScrollBar_1.ScrollBar(scrollBarElement, scrollMark, data.emitter);
     };
     ScrollBarBuilder.prototype.setTemplate = function (template) {

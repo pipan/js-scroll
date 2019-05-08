@@ -26,9 +26,10 @@ var ScrollBox = (function () {
     ScrollBox.prototype.initialize = function (element, config) {
         var _this = this;
         if (config === void 0) { config = {}; }
+        var barEmmiter = this.emitterService.createEmitter();
         this.element = element;
         this.config = config;
-        this.touchComponent = new touch_1.TouchComponent(this.element, this.emitter);
+        this.touchComponent = new touch_1.TouchComponent(this.element, barEmmiter);
         this.pane = this.element.firstElementChild;
         if (this.element.children.length == 0) {
             throw "Scroll Box has to have 1 child element";
@@ -37,9 +38,17 @@ var ScrollBox = (function () {
             throw "Scroll Box cannot have more then 1 child element";
         }
         this.scrollBar = this.scrollBarBuilder.build({
-            emitter: this.emitter
+            emitter: barEmmiter
         });
         this.domService.insert([this.scrollBar.getElement()], this.element);
+        this.scrollBar.getEmitter().on('wbMove', function (position) {
+            _this.emitter.emit('wbScroll', {
+                vertical: position,
+                horizontal: 0,
+                x: 0,
+                y: _this.getScrollTop()
+            });
+        });
         var scrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', function (event) {
             _this.scrollBar.scrollBy(event.vertical / (_this.scrollBar.getElement().offsetHeight - scrollMark.getElement().offsetHeight));
@@ -52,10 +61,6 @@ var ScrollBox = (function () {
             _this.scrollBar.scrollBy(_this.normalizeRemaining(event.vertical));
         });
         this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));
-        this.element.addEventListener('resize', function () {
-            console.log("RESIZE");
-            _this.updateView(_this.getBar().getMark().getPosition());
-        });
         this.recalc();
     };
     ScrollBox.prototype.updateView = function (interpolatePercentage) {
@@ -81,7 +86,10 @@ var ScrollBox = (function () {
         else {
             this.scrollBar.getMark().setHeight(Math.min(this.element.offsetHeight / this.pane.offsetHeight, 1));
         }
-        this.pane.style.top = (this.pane.offsetHeight - this.element.offsetHeight) * -1 * this.getBar().getMark().getPosition() + "px";
+        this.pane.style.top = this.getScrollTop() + "px";
+    };
+    ScrollBox.prototype.getScrollTop = function () {
+        return (this.pane.offsetHeight - this.element.offsetHeight) * -1 * this.getBar().getMark().getPosition();
     };
     ScrollBox.prototype.getBar = function () {
         return this.scrollBar;
