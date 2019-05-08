@@ -52,6 +52,7 @@ export class ScrollBox  implements Component
                 x: 0,
                 y: this.getScrollTop()
             });
+            this.updateView(position);
         });
 
         let scrollMark: ScrollMark = this.getBar().getMark();
@@ -66,9 +67,7 @@ export class ScrollBox  implements Component
 
         this.touchComponent.getEmitter().on('wbTouchscroll', (event: any) => {
             this.scrollBar.scrollBy(this.normalizeRemaining(event.vertical));
-        })
-
-        this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));
+        });
 
         this.recalc();
     }

@@ -48,6 +48,7 @@ var ScrollBox = (function () {
                 x: 0,
                 y: _this.getScrollTop()
             });
+            _this.updateView(position);
         });
         var scrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', function (event) {
@@ -60,7 +61,6 @@ var ScrollBox = (function () {
         this.touchComponent.getEmitter().on('wbTouchscroll', function (event) {
             _this.scrollBar.scrollBy(_this.normalizeRemaining(event.vertical));
         });
-        this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));
         this.recalc();
     };
     ScrollBox.prototype.updateView = function (interpolatePercentage) {
