@@ -13,9 +13,6 @@ export class ScrollBar implements Component
         this.element = element;
         this.mark = mark;
         this.emitter = emitter;
-        mark.getEmitter().on('wbMove', (position: number) => {
-            this.emitter.emit('wbScroll', position);
-        });
 
         this.element.addEventListener('mousedown', (event: any) => {
             if (event.button != 0) {

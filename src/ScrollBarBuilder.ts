@@ -23,12 +23,14 @@ export class ScrollBarBuilder implements ComponentBuilder
 
     public build(data: any = {}): any
     {
-        let scrollMark: ScrollMark = this.scrollMarkBuilder.build({}) as ScrollMark;
-        let scrollBarElement = this.domService.create(this.template);
-        this.domService.insert([scrollMark.getElement()], scrollBarElement);
         if (!data.emitter) {
             data.emitter = this.emitterService.createEmitter();
         }
+        let scrollMark: ScrollMark = this.scrollMarkBuilder.build({
+            emitter: data.emitter
+        }) as ScrollMark;
+        let scrollBarElement = this.domService.create(this.template);
+        this.domService.insert([scrollMark.getElement()], scrollBarElement);
         return new ScrollBar(scrollBarElement, scrollMark, data.emitter);
     }
 

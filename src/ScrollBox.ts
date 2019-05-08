@@ -29,9 +29,10 @@ export class ScrollBox  implements Component
 
     initialize(element: HTMLElement, config: any = {}): void
     {
+        let barEmmiter: Emitter = this.emitterService.createEmitter();
         this.element = element;
         this.config = config;
-        this.touchComponent = new TouchComponent(this.element, this.emitter);
+        this.touchComponent = new TouchComponent(this.element, barEmmiter);
         this.pane = this.element.firstElementChild as HTMLElement;
         if (this.element.children.length == 0) {
             throw "Scroll Box has to have 1 child element";
@@ -41,9 +42,17 @@ export class ScrollBox  implements Component
         }
         
         this.scrollBar = this.scrollBarBuilder.build({
-            emitter: this.emitter
+            emitter: barEmmiter
         }) as ScrollBar;
         this.domService.insert([this.scrollBar.getElement()], this.element);
+        this.scrollBar.getEmitter().on('wbMove', (position: number) => {
+            this.emitter.emit('wbScroll', {
+                vertical: position,
+                horizontal: 0,
+                x: 0,
+                y: this.getScrollTop()
+            });
+        });
 
         let scrollMark: ScrollMark = this.getBar().getMark();
         scrollMark.getEmitter().on('wbDrag', (event: any) => {
@@ -59,7 +68,7 @@ export class ScrollBox  implements Component
             this.scrollBar.scrollBy(this.normalizeRemaining(event.vertical));
         })
 
-        this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));        
+        this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));
 
         this.recalc();
     }
@@ -75,7 +84,7 @@ export class ScrollBox  implements Component
             }, this.config.onScroll.delay);
             this.element.classList.add(this.config.onScroll.class);
         }
-        this.pane.style.top = (this.pane.offsetHeight - this.element.offsetHeight) * -1 * interpolatePercentage + "px";
+        this.recalc();
     }
 
     public recalc(): void
@@ -88,6 +97,12 @@ export class ScrollBox  implements Component
         } else {
             this.scrollBar.getMark().setHeight(Math.min(this.element.offsetHeight / this.pane.offsetHeight, 1));
         }
+        this.pane.style.top = this.getScrollTop() + "px";
+    }
+
+    public getScrollTop(): number
+    {
+        return (this.pane.offsetHeight - this.element.offsetHeight) * -1 * this.getBar().getMark().getPosition();
     }
 
     public getBar(): ScrollBar

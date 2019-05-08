@@ -15,6 +15,10 @@ It's usefull to know these libraries:
 * inversify
 * @wildebeest/js-modules
 
+## Preview
+
+![](https://media.giphy.com/media/UuHW8aLzpAh2GABnub/giphy.gif)
+
 ## Usage
 
 After the application starts with `app.run([ScrollModule])` you can create scroll boxes. `ScrollBox` is enabled by creating new instance of this class. First select DOM element that is suppous to became scrollale and then create new instance of `ScrollBox` an `initialize it.
@@ -64,6 +68,15 @@ ScrollBar and ScrollMark will have `scroll-bar` and `scroll-bar__mark` css class
     cursor: grab;
 }
 ```
+
+## Scroll Event
+
+ScrollBox emits `wbScroll` event that contains 4 values:
+
+* vertical: float number in <0, 1> range that represent the percentage of vertical scroll position
+* horizontal: float number in <0, 1> range that represent the percentage of horizontal scroll position
+* x: number that represents scrol value from left in pixels
+* y: number that represents scrol value from top in pixels
 
 ## Customization
 

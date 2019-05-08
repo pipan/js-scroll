@@ -16,7 +16,7 @@ beforeEach(() => {
 
 test("test scroll to", () => {
     let scroll: number = 0;
-    component.getEmitter().on('wbScroll', (value: number) => {
+    component.getEmitter().on('wbMove', (value: number) => {
         scroll = value;
     });
     component.scrollTo(0.1);
@@ -27,7 +27,7 @@ test("test scroll to", () => {
 test("test scroll by", () => {
     let scroll: number = 0;
     component.scrollTo(0.2);
-    component.getEmitter().on('wbScroll', (value: number) => {
+    component.getEmitter().on('wbMove', (value: number) => {
         scroll = value;
     });
     component.scrollBy(0.2);

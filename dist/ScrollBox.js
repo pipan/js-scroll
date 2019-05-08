@@ -52,6 +52,10 @@ var ScrollBox = (function () {
             _this.scrollBar.scrollBy(_this.normalizeRemaining(event.vertical));
         });
         this.scrollBar.getEmitter().on('wbScroll', this.updateView.bind(this));
+        this.element.addEventListener('resize', function () {
+            console.log("RESIZE");
+            _this.updateView(_this.getBar().getMark().getPosition());
+        });
         this.recalc();
     };
     ScrollBox.prototype.updateView = function (interpolatePercentage) {
@@ -65,7 +69,7 @@ var ScrollBox = (function () {
             }, this.config.onScroll.delay);
             this.element.classList.add(this.config.onScroll.class);
         }
-        this.pane.style.top = (this.pane.offsetHeight - this.element.offsetHeight) * -1 * interpolatePercentage + "px";
+        this.recalc();
     };
     ScrollBox.prototype.recalc = function () {
         if (!this.pane) {
@@ -77,6 +81,7 @@ var ScrollBox = (function () {
         else {
             this.scrollBar.getMark().setHeight(Math.min(this.element.offsetHeight / this.pane.offsetHeight, 1));
         }
+        this.pane.style.top = (this.pane.offsetHeight - this.element.offsetHeight) * -1 * this.getBar().getMark().getPosition() + "px";
     };
     ScrollBox.prototype.getBar = function () {
         return this.scrollBar;

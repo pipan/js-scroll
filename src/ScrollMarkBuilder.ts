@@ -21,7 +21,10 @@ export class ScrollMarkBuilder implements ComponentBuilder
     build(data: any = {}): Component
     {
         let scrollMarkElement = this.domService.create(this.template);
-        return new ScrollMark(scrollMarkElement, this.emitterService.createEmitter());
+        if (!data.emitter) {
+            data.emitter = this.emitterService.createEmitter();
+        }
+        return new ScrollMark(scrollMarkElement, data.emitter);
     }
 
     setTemplate(template: string): void
