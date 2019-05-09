@@ -14,6 +14,7 @@ var ScrollModule = (function () {
         container.bind('ComponentBuilder').to(ScrollBarBuilder_1.ScrollBarBuilder).inSingletonScope().whenTargetNamed('scroll-bar');
         container.bind('ComponentBuilder').to(ScrollMarkBuilder_1.ScrollMarkBuilder).inSingletonScope().whenTargetNamed('scroll-mark');
         container.bind(ScrollBox_1.ScrollBox).toSelf();
+        container.bind("Factory<ScrollBox>").toAutoFactory(ScrollBox_1.ScrollBox);
     };
     ScrollModule.prototype.boot = function (container) { };
     ScrollModule.prototype.getDependencies = function () {
