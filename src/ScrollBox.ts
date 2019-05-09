@@ -31,6 +31,7 @@ export class ScrollBox  implements Component
     {
         let barEmmiter: Emitter = this.emitterService.createEmitter();
         this.element = element;
+        this.element.style.overflow = "hidden";
         this.config = config;
         this.touchComponent = new TouchComponent(this.element, barEmmiter);
         this.pane = this.element.firstElementChild as HTMLElement;

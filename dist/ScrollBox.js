@@ -28,6 +28,7 @@ var ScrollBox = (function () {
         if (config === void 0) { config = {}; }
         var barEmmiter = this.emitterService.createEmitter();
         this.element = element;
+        this.element.style.overflow = "hidden";
         this.config = config;
         this.touchComponent = new touch_1.TouchComponent(this.element, barEmmiter);
         this.pane = this.element.firstElementChild;
