@@ -35,6 +35,7 @@ export class ScrollBox  implements Component
         this.config = config;
         this.touchComponent = new TouchComponent(this.element, barEmmiter);
         this.pane = this.element.firstElementChild as HTMLElement;
+        this.pane.style.position = "relative";
         if (this.element.children.length == 0) {
             throw "Scroll Box has to have 1 child element";
         }

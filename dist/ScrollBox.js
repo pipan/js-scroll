@@ -32,6 +32,7 @@ var ScrollBox = (function () {
         this.config = config;
         this.touchComponent = new touch_1.TouchComponent(this.element, barEmmiter);
         this.pane = this.element.firstElementChild;
+        this.pane.style.position = "relative";
         if (this.element.children.length == 0) {
             throw "Scroll Box has to have 1 child element";
         }
