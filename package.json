@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/pipan/js-scroll.git"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@wildebeest/common": "^0.2.2",
     "@wildebeest/component": "^0.2.0",
     "@wildebeest/drag": "^0.3.0",
@@ -24,10 +24,16 @@
     "@wildebeest/touch": "^0.3.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.11",
-    "jest": "^24.7.1",
+    "@types/jest": "^24.0.12",
+    "@wildebeest/common": "^0.2.5",
+    "@wildebeest/component": "^0.2.2",
+    "@wildebeest/drag": "^0.3.3",
+    "@wildebeest/js-modules": "^0.1.6",
+    "@wildebeest/touch": "^0.3.2",
+    "inversify": "^5.0.1",
+    "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.5"
   },
   "keywords": [
     "js",
